@@ -12,7 +12,7 @@ Eine vollständige lokale Lernplattform für das **Microsoft Agent Framework (MA
 - Revision Loop zurück zum Agenten
 - SQLite-basierter Run- und Event-Inspector
 - API-key-freier Demo-Modus, der Simulationen klar als Simulation kennzeichnet
-- OpenAI-kompatible Provider, einschließlich lokaler Ollama-Endpunkte oder externer Gateways
+- OpenAI-kompatible Provider (OpenRouter, Ollama, kompatible Gateways)
 
 ## Voraussetzungen
 
@@ -53,14 +53,15 @@ Der Demo-Modus funktioniert ohne API-Key. Das Setup verwendet `requirements-lock
 ## Echter Microsoft-Agent-Framework-Modus
 
 1. Kopieren Sie `.env.example` nach `.env`, falls das Setup dies noch nicht erledigt hat.
-2. Setzen Sie mindestens:
+2. Empfohlene Konfiguration für **OpenRouter**:
 
 ```dotenv
-OPENAI_API_KEY=IhrApiKey
-OPENAI_MODEL=gpt-5.4-nano
+OPENAI_API_KEY=sk-or-v1-...
+OPENAI_MODEL=deepseek/deepseek-v4-flash
+OPENAI_BASE_URL=https://openrouter.ai/api/v1
 ```
 
-3. Für einen OpenAI-kompatiblen Gateway oder Ollama ergänzen Sie dessen dokumentierte Base URL:
+3. Alternativ für einen OpenAI-kompatiblen Gateway oder **Ollama** (lokal):
 
 ```dotenv
 OPENAI_BASE_URL=http://localhost:11434/v1/
