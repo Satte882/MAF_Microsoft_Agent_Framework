@@ -71,7 +71,7 @@ def test_revision_creates_new_checkpoint(tmp_path: Path) -> None:
         assert len(revised["checkpoints"]) == 2
 
 
-def test_approve_sends_empty_guidance(tmp_path: Path) -> None:
+def test_approve_ignores_guidance_in_demo_api(tmp_path: Path) -> None:
     with make_client(tmp_path) as client:
         run = client.post(
             "/api/runs",

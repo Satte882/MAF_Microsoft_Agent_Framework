@@ -2,6 +2,38 @@
 
 Eine vollständige lokale Lernplattform für das **Microsoft Agent Framework (MAF)**. Das Repository enthält nicht nur Notizen oder lose Samples, sondern eine zusammenhängende Anwendung mit Browser-Oberfläche, API, SQLite-Persistenz, echtem MAF-Workflow, File-Checkpoints, Human-in-the-Loop, Demo-Modus, Tests, Docker und Continuous Integration (CI).
 
+## Schnellstart
+
+Der vorgesehene Windows-Pfad lautet:
+
+`C:\Users\user\Documents\GitHub\MAF_Microsoft_Agent_Framework`
+
+Einmalig oder nach Dependency-Änderungen:
+
+```powershell
+cd C:\Users\user\Documents\GitHub\MAF_Microsoft_Agent_Framework
+.\scripts\setup.ps1
+```
+
+Anwendung starten:
+
+```powershell
+cd C:\Users\user\Documents\GitHub\MAF_Microsoft_Agent_Framework
+.\scripts\run.ps1
+```
+
+Danach im Browser öffnen:
+
+`http://127.0.0.1:8000`
+
+Zum Testen:
+
+```powershell
+.\scripts\test.ps1
+```
+
+Der Demo-Modus funktioniert ohne API-Key. Das Setup verwendet `requirements-lock.txt` mit vollständig aufgelösten Versionen.
+
 ## Was die Plattform konkret zeigt
 
 - Expliziter Workflow: `Case Intake → Risk Policy → Agent Draft → Human Review → Output`
@@ -24,10 +56,6 @@ Eine vollständige lokale Lernplattform für das **Microsoft Agent Framework (MA
 
 ## Bestehenden lokalen Ordner aktualisieren
 
-Der vorgesehene Windows-Pfad lautet:
-
-`C:\Users\user\Documents\GitHub\MAF_Microsoft_Agent_Framework`
-
 Öffnen Sie PowerShell in diesem Ordner und führen Sie aus:
 
 ```powershell
@@ -35,20 +63,6 @@ git fetch --all --prune
 git checkout main
 git pull --ff-only
 ```
-
-## Schnellstart unter Windows
-
-```powershell
-cd C:\Users\user\Documents\GitHub\MAF_Microsoft_Agent_Framework
-.\scripts\setup.ps1
-.\scripts\run.ps1
-```
-
-Danach im Browser öffnen:
-
-`http://127.0.0.1:8000`
-
-Der Demo-Modus funktioniert ohne API-Key. Das Setup verwendet `requirements-lock.txt` mit vollständig aufgelösten Versionen.
 
 ## Echter Microsoft-Agent-Framework-Modus
 
@@ -74,10 +88,6 @@ OPENAI_API_KEY=ollama
 API-Keys und lokale Daten werden durch `.gitignore` vom Repository ausgeschlossen.
 
 ## Tests
-
-```powershell
-.\scripts\test.ps1
-```
 
 Die Tests prüfen:
 
@@ -116,6 +126,7 @@ Nach dem Start stehen bereit:
 ```text
 .github/workflows/ci.yml       CI für Python 3.12 und 3.13
 docs/                          Architektur, Lernpfad und Entscheidungen
+docs/screenshots/              Ablage für Screenshots der Plattform
 scripts/                       Windows- und Unix-Setup, Start und Tests
 src/maf_lab/api.py             FastAPI-Anwendung
 src/maf_lab/service.py         Anwendungsorchestrierung
@@ -146,6 +157,7 @@ Diese Plattform ist ein Lern- und Architektur-Labor, kein produktives Mahnwesen.
 - [Lernpfad](docs/LEARNING_PATH.md)
 - [MAF-Konzepte](docs/MAF_CONCEPTS.md)
 - [Architekturentscheidungen](docs/DECISIONS.md)
+- [Screenshots](docs/screenshots/README.md)
 
 ## Lizenz
 
