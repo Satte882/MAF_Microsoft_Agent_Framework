@@ -26,24 +26,37 @@
         <p>Deterministische Regeln bleiben außerhalb des Sprachmodells. Der Agent formuliert nur den Vorschlag; ein Mensch entscheidet.</p>
       </div>
       <div class="workflow-graph" aria-label="Workflow graph">
-        <div class="layer application-layer">
-          <div class="layer-label">Application Layer</div>
-          <div class="layer-nodes">
-            <article class="node input"><span>1</span><strong>Fall eingeben</strong><small>Formular</small></article>
-            <div class="arrow">→</div>
-            <article class="node deterministic"><span>2</span><strong>Risk Policy</strong><small>Python-Regeln</small></article>
+        <div class="lane lane-app">
+          <div class="lane-title">Application Layer</div>
+          <div class="lane-track">
+            <div class="lane-flow app-flow">
+              <article class="node input"><span>1</span><strong>Fall eingeben</strong><small>Formular</small></article>
+              <div class="arrow">→</div>
+              <article class="node deterministic"><span>2</span><strong>Risk Policy</strong><small>Python-Regeln</small></article>
+            </div>
           </div>
         </div>
-        <div class="layer-separator"><span>MAF Workflow</span></div>
-        <div class="layer maf-layer">
-          <div class="layer-nodes">
-            <article class="node deterministic"><span>3</span><strong>Case Intake</strong><small>Executor</small></article>
-            <div class="arrow">→</div>
-            <article class="node agent"><span>4</span><strong>Draft Advisor</strong><small>MAF Agent</small></article>
-            <div class="arrow">→</div>
-            <article class="node human"><span>5</span><strong>Human Review</strong><small>request_info</small></article>
-            <div class="loop-label">Revision</div>
-            <article class="node output"><span>6</span><strong>Final Output</strong><small>yield_output</small></article>
+        <div class="lane-transition" aria-hidden="true">
+          <div class="transition-spacer"></div>
+          <div class="transition-path">
+            <div class="transition-drop"></div>
+            <div class="transition-caption">Übergabe an MAF</div>
+          </div>
+        </div>
+        <div class="lane lane-maf">
+          <div class="lane-title">MAF Workflow</div>
+          <div class="lane-track">
+            <div class="lane-flow maf-flow">
+              <div class="flow-offset" aria-hidden="true"></div>
+              <article class="node deterministic"><span>3</span><strong>Case Intake</strong><small>Executor</small></article>
+              <div class="arrow">→</div>
+              <article class="node agent"><span>4</span><strong>Draft Advisor</strong><small>MAF Agent</small></article>
+              <div class="arrow">→</div>
+              <article class="node human"><span>5</span><strong>Human Review</strong><small>request_info</small></article>
+              <div class="arrow">→</div>
+              <article class="node output"><span>6</span><strong>Final Output</strong><small>yield_output</small></article>
+              <div class="loop-label">Revision zurück an den Agenten</div>
+            </div>
           </div>
         </div>
       </div>
