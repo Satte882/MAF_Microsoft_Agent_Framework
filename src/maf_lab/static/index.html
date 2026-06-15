@@ -26,15 +26,26 @@
         <p>Deterministische Regeln bleiben außerhalb des Sprachmodells. Der Agent formuliert nur den Vorschlag; ein Mensch entscheidet.</p>
       </div>
       <div class="workflow-graph" aria-label="Workflow graph">
-        <article class="node deterministic"><span>1</span><strong>Case Intake</strong><small>Executor</small></article>
-        <div class="arrow">→</div>
-        <article class="node deterministic"><span>2</span><strong>Risk Policy</strong><small>Python rule</small></article>
-        <div class="arrow">→</div>
-        <article class="node agent"><span>3</span><strong>Draft Advisor</strong><small>MAF Agent</small></article>
-        <div class="arrow">→</div>
-        <article class="node human"><span>4</span><strong>Human Review</strong><small>request_info</small></article>
-        <div class="loop-label">Revision ↺</div>
-        <article class="node output"><span>5</span><strong>Final Output</strong><small>yield_output</small></article>
+        <div class="layer application-layer">
+          <div class="layer-label">Application Layer</div>
+          <div class="layer-nodes">
+            <article class="node input"><span>1</span><strong>Fall eingeben</strong><small>Formular</small></article>
+            <div class="arrow">→</div>
+            <article class="node deterministic"><span>2</span><strong>Risk Policy</strong><small>Python-Regeln</small></article>
+          </div>
+        </div>
+        <div class="layer-separator"><span>MAF Workflow</span></div>
+        <div class="layer maf-layer">
+          <div class="layer-nodes">
+            <article class="node deterministic"><span>3</span><strong>Case Intake</strong><small>Executor</small></article>
+            <div class="arrow">→</div>
+            <article class="node agent"><span>4</span><strong>Draft Advisor</strong><small>MAF Agent</small></article>
+            <div class="arrow">→</div>
+            <article class="node human"><span>5</span><strong>Human Review</strong><small>request_info</small></article>
+            <div class="loop-label">Revision</div>
+            <article class="node output"><span>6</span><strong>Final Output</strong><small>yield_output</small></article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -88,11 +99,22 @@
           <div id="recommendation" class="output-box"></div>
           <div id="decision-box" class="decision-box hidden">
             <h3>Menschliche Entscheidung</h3>
-            <textarea id="decision-guidance" rows="3" placeholder="Hinweis für Überarbeitung oder Begründung"></textarea>
             <div class="button-row">
               <button data-action="approve" class="primary">Freigeben</button>
               <button data-action="revise" class="secondary">Überarbeiten</button>
               <button data-action="reject" class="danger">Ablehnen</button>
+            </div>
+            <div id="decision-confirm-area" class="hidden confirm-area">
+              <div id="decision-guidance-wrap" class="hidden">
+                <label>Anweisung für Überarbeitung (erforderlich):</label>
+                <textarea id="decision-guidance" rows="3" placeholder="Bitte geben Sie eine Anweisung für die Überarbeitung ein."></textarea>
+              </div>
+              <p id="decision-confirm-message"></p>
+              <div class="button-row">
+                <button id="decision-confirm-action" class="primary">Bestätigen</button>
+                <button id="decision-cancel" class="secondary">Abbrechen</button>
+              </div>
+              <p id="decision-error" class="form-message" role="alert"></p>
             </div>
           </div>
           <div id="final-output-wrap" class="hidden">
@@ -120,9 +142,9 @@
   </main>
 
   <footer>
-    <span>Lokales Lernsystem · Daten verbleiben in SQLite und im Checkpoint-Verzeichnis.</span>
-    <a href="/docs" onclick="return false" title="Siehe Repository-Dokumentation">Dokumentation im Repository</a>
+    <span>Lokales Lernsystem · Runs und Checkpoints werden lokal gespeichert. Im echten MAF-Modus werden die für den Agenten erforderlichen Eingabedaten an den konfigurierten Modellprovider übertragen.</span>
+    <a href="/docs" title="Siehe Repository-Dokumentation">Dokumentation im Repository</a>
   </footer>
-  <script src="/static/app.js" defer></script>
+  <script src="/static/app.js?v=2" defer></script>
 </body>
 </html>

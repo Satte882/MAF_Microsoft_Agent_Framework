@@ -32,7 +32,7 @@ Der vorgesehene Windows-Pfad lautet:
 
 ```powershell
 git fetch --all --prune
-git checkout master
+git checkout main
 git pull --ff-only
 ```
 

@@ -69,3 +69,58 @@ def test_revision_creates_new_checkpoint(tmp_path: Path) -> None:
         assert revised["status"] == "awaiting_human"
         assert "Kürzer formulieren" in revised["recommendation"]
         assert len(revised["checkpoints"]) == 2
+
+
+def test_approve_sends_empty_guidance(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        run = client.post(
+            "/api/runs",
+            json={
+                "customer_name": "Test",
+                "invoice_number": "RE-APP-1",
+                "amount_eur": 100,
+                "days_overdue": 5,
+                "context": "",
+                "mode": "demo",
+            },
+        ).json()
+        assert run["status"] == "awaiting_human"
+        decision = client.post(
+            f"/api/runs/{run['id']}/decision",
+            json={"action": "approve", "guidance": "irrelevant"},
+        )
+        assert decision.status_code == 200
+        completed = decision.json()
+        assert completed["status"] == "completed"
+        assert completed["output"] == completed["recommendation"]
+
+
+def test_reject_allows_empty_guidance(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        run = client.post(
+            "/api/runs",
+            json={
+                "customer_name": "Test",
+                "invoice_number": "RE-REJ-1",
+                "amount_eur": 200,
+                "days_overdue": 10,
+                "context": "",
+                "mode": "demo",
+            },
+        ).json()
+        assert run["status"] == "awaiting_human"
+        decision = client.post(
+            f"/api/runs/{run['id']}/decision",
+            json={"action": "reject", "guidance": ""},
+        )
+        assert decision.status_code == 200
+        rejected = decision.json()
+        assert rejected["status"] == "rejected"
+        assert "abgelehnt" in rejected["output"].lower()
+
+
+def test_footer_contains_privacy_notice(tmp_path: Path) -> None:
+    from maf_lab.api import STATIC_DIR
+    footer_html = (STATIC_DIR / "index.html").read_text("utf-8")
+    assert "Runs und Checkpoints werden lokal gespeichert" in footer_html
+    assert "Modellprovider" in footer_html
