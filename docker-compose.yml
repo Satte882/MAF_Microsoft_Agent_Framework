@@ -1,0 +1,17 @@
+services:
+  maf-lab:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      MAF_LAB_HOST: 0.0.0.0
+      MAF_LAB_DATA_DIR: /app/data
+    volumes:
+      - maf-lab-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  maf-lab-data:

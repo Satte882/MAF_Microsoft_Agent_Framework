@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAF Learning Platform</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Microsoft Agent Framework</p>
+      <h1>Workflow-, Checkpoint- und Human-in-the-Loop-Labor</h1>
+      <p class="lead">Eine zusammenhängende lokale Anwendung statt isolierter Codebeispiele.</p>
+    </div>
+    <div id="system-badges" class="badge-row" aria-live="polite"></div>
+  </header>
+
+  <main>
+    <section class="panel architecture-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Expliziter Kontrollfluss</p>
+          <h2>Der untersuchte Workflow</h2>
+        </div>
+        <p>Deterministische Regeln bleiben außerhalb des Sprachmodells. Der Agent formuliert nur den Vorschlag; ein Mensch entscheidet.</p>
+      </div>
+      <div class="workflow-graph" aria-label="Workflow graph">
+        <article class="node deterministic"><span>1</span><strong>Case Intake</strong><small>Executor</small></article>
+        <div class="arrow">→</div>
+        <article class="node deterministic"><span>2</span><strong>Risk Policy</strong><small>Python rule</small></article>
+        <div class="arrow">→</div>
+        <article class="node agent"><span>3</span><strong>Draft Advisor</strong><small>MAF Agent</small></article>
+        <div class="arrow">→</div>
+        <article class="node human"><span>4</span><strong>Human Review</strong><small>request_info</small></article>
+        <div class="loop-label">Revision ↺</div>
+        <article class="node output"><span>5</span><strong>Final Output</strong><small>yield_output</small></article>
+      </div>
+    </section>
+
+    <div class="workspace-grid">
+      <section class="panel">
+        <div class="section-heading compact">
+          <div><p class="eyebrow">Neuer Lauf</p><h2>Rechnungsfall starten</h2></div>
+        </div>
+        <form id="run-form">
+          <label>Kunde<input name="customer_name" value="Muster SHK GmbH" required minlength="2"></label>
+          <label>Rechnungsnummer<input name="invoice_number" value="RE-2026-0042" required></label>
+          <div class="two-columns">
+            <label>Betrag in EUR<input name="amount_eur" type="number" min="0.01" step="0.01" value="2780" required></label>
+            <label>Tage überfällig<input name="days_overdue" type="number" min="0" value="24" required></label>
+          </div>
+          <label>Kontext<textarea name="context" rows="3">Kunde wurde bereits freundlich erinnert.</textarea></label>
+          <label>Ausführungsmodus
+            <select name="mode">
+              <option value="demo">Demo – ohne API-Key, Lifecycle simuliert</option>
+              <option value="maf">MAF – echter Agent und echte File-Checkpoints</option>
+            </select>
+          </label>
+          <button type="submit" class="primary">Workflow starten</button>
+          <p id="form-message" class="form-message" role="status"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading compact">
+          <div><p class="eyebrow">Persistierter Zustand</p><h2>Läufe</h2></div>
+          <button id="refresh-runs" class="secondary">Aktualisieren</button>
+        </div>
+        <div id="runs-list" class="runs-list"></div>
+      </section>
+    </div>
+
+    <section id="run-detail-panel" class="panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">Run Inspector</p><h2 id="detail-title">Laufdetails</h2></div>
+        <div id="detail-status"></div>
+      </div>
+      <div class="detail-grid">
+        <article class="metric-card"><span>Modus</span><strong id="detail-mode">–</strong></article>
+        <article class="metric-card"><span>Risiko</span><strong id="detail-risk">–</strong></article>
+        <article class="metric-card"><span>Checkpoint</span><strong id="detail-checkpoint">–</strong></article>
+        <article class="metric-card"><span>Request ID</span><strong id="detail-request">–</strong></article>
+      </div>
+      <div class="content-grid">
+        <div>
+          <h3>Empfehlung</h3>
+          <div id="recommendation" class="output-box"></div>
+          <div id="decision-box" class="decision-box hidden">
+            <h3>Menschliche Entscheidung</h3>
+            <textarea id="decision-guidance" rows="3" placeholder="Hinweis für Überarbeitung oder Begründung"></textarea>
+            <div class="button-row">
+              <button data-action="approve" class="primary">Freigeben</button>
+              <button data-action="revise" class="secondary">Überarbeiten</button>
+              <button data-action="reject" class="danger">Ablehnen</button>
+            </div>
+          </div>
+          <div id="final-output-wrap" class="hidden">
+            <h3>Finales Ergebnis</h3>
+            <div id="final-output" class="output-box final"></div>
+          </div>
+        </div>
+        <div>
+          <h3>Event-Timeline</h3>
+          <div id="event-timeline" class="timeline"></div>
+        </div>
+      </div>
+      <div>
+        <h3>Checkpoint-Historie</h3>
+        <div id="checkpoint-list" class="checkpoint-list"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">Begriffsmodell</p><h2>Was Sie in dieser Plattform beobachten</h2></div>
+      </div>
+      <div id="concept-grid" class="concept-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Lokales Lernsystem · Daten verbleiben in SQLite und im Checkpoint-Verzeichnis.</span>
+    <a href="/docs" onclick="return false" title="Siehe Repository-Dokumentation">Dokumentation im Repository</a>
+  </footer>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

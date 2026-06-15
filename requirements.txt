@@ -1,0 +1,4 @@
+agent-framework-core==1.8.1
+agent-framework-openai==1.8.1
+fastapi==0.128.2
+uvicorn[standard]==0.48.0
